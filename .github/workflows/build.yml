@@ -31,11 +31,12 @@ jobs:
       - name: build the container
         run: |
           apptainer build --build-arg DEF_HASH=${{ github.sha }} lad-al9.sif al9.def
-          apptainer inspect lad-al9.sif
+          apptainer inspect --labels lad-al9.sif > ${{ github.workspace }}-release.txt
 
       - name: upload compiled image
-        if: startsWith(github.event.ref, 'refs/tags/') 
+        if: github.ref_type == 'tag'
         uses: softprops/action-gh-release@v3
         with:
+          body_path: ${{ github.workspace }}-release.txt
           files: |
             *.sif
