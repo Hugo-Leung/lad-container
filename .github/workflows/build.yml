@@ -22,10 +22,10 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v5
-      - uses: eWaterCycle/setup-apptainer@3f706d898c9db585b1d741b4692e66755f3a1b40
+      - uses: actions/checkout@v7
+      - uses: eWaterCycle/setup-apptainer@v3
         with:
-          apptainer-version: 1.4.3
+          apptainer-version: 1.5.5
 
       # Runs a single command using the runners shell
       - name: build the container
@@ -35,7 +35,7 @@ jobs:
 
       - name: upload compiled image
         if: startsWith(github.event.ref, 'refs/tags/') 
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             *.sif
