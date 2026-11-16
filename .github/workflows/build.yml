@@ -22,18 +22,21 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v5
-      - uses: eWaterCycle/setup-apptainer@3f706d898c9db585b1d741b4692e66755f3a1b40
+      - uses: actions/checkout@v7
+      - uses: eWaterCycle/setup-apptainer@v3
         with:
-          apptainer-version: 1.4.3
+          apptainer-version: 1.5.5
 
       # Runs a single command using the runners shell
       - name: build the container
-        run: apptainer build --build-arg DEF_HASH=${{ github.sha }} lad-al9.sif al9.def
+        run: |
+          apptainer build --build-arg DEF_HASH=${{ github.sha }} lad-al9.sif al9.def
+          apptainer inspect --labels lad-al9.sif > ${{ github.workspace }}-release.txt
 
-      - name: upload compiled document
-        if: startsWith(github.event.ref, 'refs/tags/') 
-        uses: softprops/action-gh-release@v2
+      - name: upload compiled image
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v3
         with:
+          body_path: ${{ github.workspace }}-release.txt
           files: |
             *.sif
