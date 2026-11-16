@@ -31,6 +31,7 @@ root-mathcore
 root-montecarlo-eg
 root-mathmore
 root-gui
+root-gui-browserv7
 root-hist
 root-physics
 root-genvector
