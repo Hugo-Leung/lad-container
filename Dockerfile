@@ -13,11 +13,13 @@ mkdir /volatile
 mkdir /cache
 mkdir /scratch
 mkdir /cvmfs
-curl -fSL https://pki.jlab.org/JLabCA.crt -o  /etc/pki/ca-trust/source/anchors/JLabCA.crt
-
 ln -s /w/work /work
-update-ca-trust
+EOF
 
+ARG CACHEBUST=0
+RUN <<EOF
+curl -fSL https://pki.jlab.org/JLabCA.crt -o  /etc/pki/ca-trust/source/anchors/JLabCA.crt
+update-ca-trust
 bash /opt/dnf.sh
 bash /opt/hcana.sh
 bash /opt/ladlib.sh
