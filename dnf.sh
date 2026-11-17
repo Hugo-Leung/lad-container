@@ -1,5 +1,5 @@
 #! /bin/bash
-set -e 
+set -ex 
 microdnf update -y 
 microdnf --enablerepo=crb install -y epel-release
 /usr/bin/crb enable

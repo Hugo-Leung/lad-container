@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e 
+set -ex 
 cd /opt
 
 git clone --depth=1  --branch develop https://github.com/JeffersonLab/hcana.git hcana-src
